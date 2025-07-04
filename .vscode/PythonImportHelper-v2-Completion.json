@@ -89,6 +89,22 @@
         "documentation": {}
     },
     {
+        "label": "post_save",
+        "importPath": "django.db.models.signals",
+        "description": "django.db.models.signals",
+        "isExtraImport": true,
+        "detail": "django.db.models.signals",
+        "documentation": {}
+    },
+    {
+        "label": "receiver",
+        "importPath": "django.dispatch",
+        "description": "django.dispatch",
+        "isExtraImport": true,
+        "detail": "django.dispatch",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -426,6 +442,33 @@
         "description": "users.models",
         "peekOfCode": "ROLE_CHOICES = [\n        ('customer', 'Customer'),\n        ('farmer', 'Farmer'),\n        ('artisan', 'Artisan'),\n        ('admin', 'Admin'),\n    ]\n# Create your models here.\nclass CustomUser(AbstractUser):\n    username = None  # Disable username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)",
         "detail": "users.models",
+        "documentation": {}
+    },
+    {
+        "label": "create_user_profile",
+        "kind": 2,
+        "importPath": "users.signals",
+        "description": "users.signals",
+        "peekOfCode": "def create_user_profile(sender, instance, created, **kwargs):\n    if created:\n        UserProfile.objects.create(user=instance)\n# Signal to save the user profile when the CustomUser is saved\n@receiver(post_save, sender=CustomUser)\ndef save_user_profile(sender, instance, **kwargs):\n    instance.userprofile.save()\n# Signal to delete the user profile when the CustomUser is deleted\n@receiver(post_save, sender=CustomUser)\ndef delete_user_profile(sender, instance, **kwargs):",
+        "detail": "users.signals",
+        "documentation": {}
+    },
+    {
+        "label": "save_user_profile",
+        "kind": 2,
+        "importPath": "users.signals",
+        "description": "users.signals",
+        "peekOfCode": "def save_user_profile(sender, instance, **kwargs):\n    instance.userprofile.save()\n# Signal to delete the user profile when the CustomUser is deleted\n@receiver(post_save, sender=CustomUser)\ndef delete_user_profile(sender, instance, **kwargs):\n    try:\n        instance.userprofile.delete()\n    except UserProfile.DoesNotExist:\n        pass",
+        "detail": "users.signals",
+        "documentation": {}
+    },
+    {
+        "label": "delete_user_profile",
+        "kind": 2,
+        "importPath": "users.signals",
+        "description": "users.signals",
+        "peekOfCode": "def delete_user_profile(sender, instance, **kwargs):\n    try:\n        instance.userprofile.delete()\n    except UserProfile.DoesNotExist:\n        pass",
+        "detail": "users.signals",
         "documentation": {}
     },
     {
