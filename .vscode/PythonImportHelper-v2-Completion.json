@@ -413,7 +413,7 @@
         "kind": 6,
         "importPath": "users.apps",
         "description": "users.apps",
-        "peekOfCode": "class UsersConfig(AppConfig):\n    default_auto_field = \"django.db.models.BigAutoField\"\n    name = \"users\"",
+        "peekOfCode": "class UsersConfig(AppConfig):\n    default_auto_field = \"django.db.models.BigAutoField\"\n    name = \"users\"\n    def ready(self):\n        # Import signals to ensure they are registered when the app is ready\n        import users.signals",
         "detail": "users.apps",
         "documentation": {}
     },
