@@ -81,6 +81,14 @@
         "documentation": {}
     },
     {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -391,6 +399,33 @@
         "description": "users.apps",
         "peekOfCode": "class UsersConfig(AppConfig):\n    default_auto_field = \"django.db.models.BigAutoField\"\n    name = \"users\"",
         "detail": "users.apps",
+        "documentation": {}
+    },
+    {
+        "label": "CustomUser",
+        "kind": 6,
+        "importPath": "users.models",
+        "description": "users.models",
+        "peekOfCode": "class CustomUser(AbstractUser):\n    username = None  # Disable username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)\n    last_name = models.CharField(max_length=255, blank=True, null=True)\n    email = models.EmailField(unique=True, blank=False, null=False)\n    phone_number = models.CharField(max_length=15, blank=True, null=True)\n    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='customer')\n    date_joined = models.DateTimeField(auto_now_add=True)\n    last_login = models.DateTimeField(auto_now=True)\n    def __str__(self):",
+        "detail": "users.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserProfile",
+        "kind": 6,
+        "importPath": "users.models",
+        "description": "users.models",
+        "peekOfCode": "class UserProfile(models.Model):\n    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)\n    address = models.CharField(max_length=255, blank=True, null=True)\n    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)\n    def __str__(self):\n        return f'Profile of {self.user.email}'",
+        "detail": "users.models",
+        "documentation": {}
+    },
+    {
+        "label": "ROLE_CHOICES",
+        "kind": 5,
+        "importPath": "users.models",
+        "description": "users.models",
+        "peekOfCode": "ROLE_CHOICES = [\n        ('customer', 'Customer'),\n        ('farmer', 'Farmer'),\n        ('artisan', 'Artisan'),\n        ('admin', 'Admin'),\n    ]\n# Create your models here.\nclass CustomUser(AbstractUser):\n    username = None  # Disable username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)",
+        "detail": "users.models",
         "documentation": {}
     },
     {
