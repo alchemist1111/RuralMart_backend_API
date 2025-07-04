@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_auth",
     "rest_auth.registration",
+    "users.apps.UsersConfig",
 ]
 
 # JWt Authentication settings
