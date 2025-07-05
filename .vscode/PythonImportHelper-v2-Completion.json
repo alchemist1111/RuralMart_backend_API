@@ -105,6 +105,38 @@
         "documentation": {}
     },
     {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "password_validation",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_model",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
         "label": "password_validation",
         "importPath": "django.contrib.auth",
         "description": "django.contrib.auth",
@@ -145,11 +177,67 @@
         "documentation": {}
     },
     {
-        "label": "render",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
         "isExtraImport": true,
-        "detail": "django.shortcuts",
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "APIView",
+        "importPath": "rest_framework.views",
+        "description": "rest_framework.views",
+        "isExtraImport": true,
+        "detail": "rest_framework.views",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshToken",
+        "importPath": "rest_framework_simplejwt.tokens",
+        "description": "rest_framework_simplejwt.tokens",
+        "isExtraImport": true,
+        "detail": "rest_framework_simplejwt.tokens",
+        "documentation": {}
+    },
+    {
+        "label": "default_token_generator",
+        "importPath": "django.contrib.auth.tokens",
+        "description": "django.contrib.auth.tokens",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.tokens",
+        "documentation": {}
+    },
+    {
+        "label": "urlsafe_base64_encode",
+        "importPath": "django.utils.http",
+        "description": "django.utils.http",
+        "isExtraImport": true,
+        "detail": "django.utils.http",
+        "documentation": {}
+    },
+    {
+        "label": "urlsafe_base64_decode",
+        "importPath": "django.utils.http",
+        "description": "django.utils.http",
+        "isExtraImport": true,
+        "detail": "django.utils.http",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
+        "importPath": "django.core.exceptions",
+        "description": "django.core.exceptions",
+        "isExtraImport": true,
+        "detail": "django.core.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "send_mail",
+        "importPath": "django.core.mail",
+        "description": "django.core.mail",
+        "isExtraImport": true,
+        "detail": "django.core.mail",
         "documentation": {}
     },
     {
@@ -184,7 +272,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "SECRET_KEY = os.getenv(\"DJANGO_SECRET_KEY\")\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = os.getenv('DJANGO_DEBUG') == 'True'\nALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",",
+        "peekOfCode": "SECRET_KEY = os.getenv(\"DJANGO_SECRET_KEY\")\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = os.getenv('DJANGO_DEBUG') == 'True'\nALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')\n# Application definition\nAUTH_USER_MODEL = 'users.CustomUser'\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -193,7 +281,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "DEBUG = os.getenv('DJANGO_DEBUG') == 'True'\nALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",",
+        "peekOfCode": "DEBUG = os.getenv('DJANGO_DEBUG') == 'True'\nALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')\n# Application definition\nAUTH_USER_MODEL = 'users.CustomUser'\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -202,7 +290,16 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",\n    \"corsheaders\",",
+        "peekOfCode": "ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')\n# Application definition\nAUTH_USER_MODEL = 'users.CustomUser'\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",",
+        "detail": "ruralmart.settings",
+        "documentation": {}
+    },
+    {
+        "label": "AUTH_USER_MODEL",
+        "kind": 5,
+        "importPath": "ruralmart.settings",
+        "description": "ruralmart.settings",
+        "peekOfCode": "AUTH_USER_MODEL = 'users.CustomUser'\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",\n    \"corsheaders\",",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -220,7 +317,16 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': (\n        'rest_framework_simplejwt.authentication.JWTAuthentication',\n    ),\n    'DEFAULT_PERMISSION_CLASSES': (\n        'rest_framework.permissions.IsAuthenticated',\n    ),\n}\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",",
+        "peekOfCode": "REST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': (\n        'rest_framework_simplejwt.authentication.JWTAuthentication',\n    ),\n    'DEFAULT_PERMISSION_CLASSES': (\n        'rest_framework.permissions.IsAuthenticated',\n    ),\n}\n# Django Allauth settings\nAUTHENTICATION_BACKENDS = (",
+        "detail": "ruralmart.settings",
+        "documentation": {}
+    },
+    {
+        "label": "AUTHENTICATION_BACKENDS",
+        "kind": 5,
+        "importPath": "ruralmart.settings",
+        "description": "ruralmart.settings",
+        "peekOfCode": "AUTHENTICATION_BACKENDS = (\n    'allauth.account.auth_backends.AuthenticationBackend',\n)\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -346,7 +452,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')\nEMAIL_HOST = os.getenv('EMAIL_HOST')\nEMAIL_PORT = os.getenv('EMAIL_PORT')\nEMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')\nEMAIL_HOST = os.getenv('EMAIL_HOST')\nEMAIL_PORT = os.getenv('EMAIL_PORT')\nEMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -355,7 +461,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "EMAIL_HOST = os.getenv('EMAIL_HOST')\nEMAIL_PORT = os.getenv('EMAIL_PORT')\nEMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "EMAIL_HOST = os.getenv('EMAIL_HOST')\nEMAIL_PORT = os.getenv('EMAIL_PORT')\nEMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -364,7 +470,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "EMAIL_PORT = os.getenv('EMAIL_PORT')\nEMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "EMAIL_PORT = os.getenv('EMAIL_PORT')\nEMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -373,7 +479,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -382,7 +488,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -391,7 +497,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -400,7 +506,7 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "ACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "ACCOUNT_EMAIL_VERIFICATION = 'mandatory'\nACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -409,16 +515,16 @@
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "ACCOUNT_EMAIL_REQUIRED = True\nAUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "ACCOUNT_EMAIL_REQUIRED = True\nACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
     {
-        "label": "AUTH_USER_MODEL",
+        "label": "ACCOUNT_AUTHENTICATED_REDIRECT_URL",
         "kind": 5,
         "importPath": "ruralmart.settings",
         "description": "ruralmart.settings",
-        "peekOfCode": "AUTH_USER_MODEL = 'users.CustomUser'",
+        "peekOfCode": "ACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'",
         "detail": "ruralmart.settings",
         "documentation": {}
     },
@@ -510,6 +616,51 @@
         "description": "users.signals",
         "peekOfCode": "def delete_user_profile(sender, instance, **kwargs):\n    try:\n        instance.userprofile.delete()\n    except UserProfile.DoesNotExist:\n        pass",
         "detail": "users.signals",
+        "documentation": {}
+    },
+    {
+        "label": "RegisterView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class RegisterView(APIView):\n    \"\"\"\n    View to handle user registration.\n    \"\"\"\n    def post(self, request):\n        serializer = RegisterSerializer(data=request.data)\n        if serializer.is_valid():\n            # Save the user instance after validation\n            user = serializer.save()\n            # Return a response with a success message",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "LoginView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class LoginView(APIView):\n    \"\"\"\n    View to handle user login and JWT token generation.\n    \"\"\"\n    def post(self, request):\n        email = request.data.get('email')\n        password = request.data.get('password')\n        # Authenticate user using email and password\n        user = authenticate(request, email=email, password=password)\n        if user is None:",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "PasswordResetRequestView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class PasswordResetRequestView(APIView):\n    \"\"\"\n    View to handle password reset requests.\n    \"\"\"\n    def post(self, request):\n        email = request.data.get('email')\n        # Check if the email exists in the system\n        try:\n            user = User.objects.get(email=email)\n        except User.DoesNotExist:",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "PasswordResetConfirmView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class PasswordResetConfirmView(APIView):\n    \"\"\"\n    View to handle password reset confirmation.\n    \"\"\"\n    def post(self, request, uidb64, token):\n        # Decode the uid from base64\n        try:\n            uid = urlsafe_base64_decode(uidb64).decode()\n            user = User.objects.get(pk=uid)\n        except (TypeError, ValueError, User.DoesNotExist):",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 5,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "User = get_user_model()\n# Register View\nclass RegisterView(APIView):\n    \"\"\"\n    View to handle user registration.\n    \"\"\"\n    def post(self, request):\n        serializer = RegisterSerializer(data=request.data)\n        if serializer.is_valid():\n            # Save the user instance after validation",
+        "detail": "users.views",
         "documentation": {}
     },
     {
