@@ -36,6 +36,7 @@ ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
 AUTH_USER_MODEL = 'users.CustomUser'
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,10 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
-    "users",
-    "allauth",
+    'allauth',
+    'allauth.account',
     "django.contrib.sites",
-    "allauth.account",
     "allauth.socialaccount",
     "rest_framework_simplejwt",
     "rest_auth",
@@ -82,6 +82,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -115,8 +116,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": os.getenv("DATABASE_NAME"),
-        "USER": os.getenv("DATABASE_USER"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "USER": os.getenv('DATABASE_USER'),
+        "PASSWORD": os.getenv('DATABASE_PASSWORD'),
         "HOST": os.getenv("DATABASE_HOST"),
         "PORT": os.getenv("DATABASE_PORT", "3306"),  # Default MySQL port
     }
@@ -173,8 +174,16 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
+# List of fields for signup
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1', 'password2']
 
+# Login method (email or username)
+ACCOUNT_LOGIN_METHODS = ['email']  # Ensure this is a list, not a string
+
+# Mandatory email verification setting
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'
+
+SILENCED_SYSTEM_CHECKS = ['account.W036']
+
+
 

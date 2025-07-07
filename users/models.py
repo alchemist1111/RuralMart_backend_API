@@ -20,6 +20,9 @@ class CustomUser(AbstractUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     
+    # The required field is email
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number']
     
     def __str__(self):
         return f'{self.email} ({self.get_role_display()})' 

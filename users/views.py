@@ -23,7 +23,7 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             # Save the user instance after validation
-            user = serializer.save()
+            serializer.save()
             # Return a response with a success message
             message = (
                 "User registered successfully. Please check your email to verify your account."
