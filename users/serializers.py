@@ -38,3 +38,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Create email address instance and send verification email
         EmailAddress.objects.create(user=user, email=user.email, verified=False)
         return user
+    
+# Login Serializer
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        if not email or not password:
+            raise serializers.ValidationError("Email and password are required.")
+
+        return attrs 

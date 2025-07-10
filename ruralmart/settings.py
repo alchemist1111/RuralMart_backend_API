@@ -70,6 +70,7 @@ REST_FRAMEWORK = {
 
 # Django Allauth settings
 AUTHENTICATION_BACKENDS = (
+    'users.backends.EmailBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 

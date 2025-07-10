@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
@@ -11,6 +11,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import password_validation
 from django.core.mail import send_mail
 from rest_framework.permissions import AllowAny
+from .serializers import LoginSerializer
+from rest_framework.permissions import IsAdminUser
 
 # Get the correct user model
 User = get_user_model()
@@ -25,7 +27,33 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             # Save the user instance after validation
-            serializer.save()
+            user = serializer.save()
+            
+             # Generate token for email verification
+            token = default_token_generator.make_token(user)
+            
+            # URL-safe encode the user ID
+            uid = urlsafe_base64_encode(user.pk.encode())
+            
+             # Construct the verification URL
+            verification_url = f'http://127.0.0.1:8000/verify-email/{uid}/{token}'
+            
+             # Construct the email content
+            subject = "Email Verification"
+            message = f"Hello {user.first_name},\n\n" \
+                      f"Please click the link below to verify your email address:\n" \
+                      f"{verification_url}\n\n" \
+                      f"If you did not create an account, please ignore this email."
+            
+            # Send email
+            send_mail(
+                subject,
+                message,
+                'ruralmartmarketplace@gmail.com',
+                [user.email],
+                fail_silently=False,
+            )          
+            
             # Return a response with a success message
             message = (
                 "User registered successfully. Please check your email to verify your account."
@@ -39,8 +67,13 @@ class LoginView(APIView):
     View to handle user login and JWT token generation.
     """
     def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
+        # Use the serializer to validate input
+        serializer = LoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
 
         # Authenticate user using email and password
         user = authenticate(request, email=email, password=password)
@@ -65,6 +98,21 @@ class LoginView(APIView):
                 "role": user.role,
             }
         }, status=status.HTTP_200_OK)
+        
+# Delete User by ID View
+class DeleteUserByIdView(APIView):
+    """
+    View to delete a user by their ID.
+    """
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, user_id):
+        try:
+            user = User.objects.get(id=user_id)
+            user.delete()
+            return Response({"message": "User deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)        
 
 # Password Reset Request View
 class PasswordResetRequestView(APIView):
@@ -88,7 +136,7 @@ class PasswordResetRequestView(APIView):
         uid = urlsafe_base64_encode(user.pk.encode())
 
         # Construct the reset URL
-        reset_url = f'http://example.com/reset/{uid}/{token}'
+        reset_url = f'http://127.0.0.1:8000/reset/{uid}/{token}'
 
         # Construct the email content (plain text)
         subject = "Password Reset Request"
@@ -101,7 +149,7 @@ class PasswordResetRequestView(APIView):
         send_mail(
             subject,
             message,
-            'from@example.com',
+            'ruralmartmarketplace@gmail.com',
             [email],
             fail_silently=False,
         )
@@ -143,3 +191,28 @@ class PasswordResetConfirmView(APIView):
             "Password reset successful. You can now log in with your new password."
         )
         return Response({"message": message}, status=status.HTTP_200_OK)
+
+
+# Email Verification View
+class EmailVerificationView(APIView):
+    """
+    View to handle email verification link click.
+    """
+
+    def get(self, request, uidb64, token):
+        try:
+            # Decode the uid and retrieve the user
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, User.DoesNotExist):
+            return Response({"detail": "Invalid token or user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Check if the token is valid
+        if not default_token_generator.check_token(user, token):
+            return Response({"detail": "Invalid token."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Activate the user account
+        user.is_active = True
+        user.save()
+
+        return Response({"message": "Email verified successfully. You can now log in."}, status=status.HTTP_200_OK)

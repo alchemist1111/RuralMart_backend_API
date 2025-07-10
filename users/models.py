@@ -41,7 +41,7 @@ class CustomUser(AbstractUser):
     last_login = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'email'  # Set email as the unique identifier
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number']  # These fields are required for user creation
+    REQUIRED_FIELDS = ['first_name', 'last_name']  # These fields are required for user creation
     
     objects = CustomUserManager()
 
