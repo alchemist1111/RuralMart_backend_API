@@ -120,7 +120,7 @@ DATABASES = {
         "USER": os.getenv('DATABASE_USER'),
         "PASSWORD": os.getenv('DATABASE_PASSWORD'),
         "HOST": os.getenv("DATABASE_HOST"),
-        "PORT": os.getenv("DATABASE_PORT", "3306"),  # Default MySQL port
+        "PORT": int(os.getenv("DATABASE_PORT", 3306)),
     }
 }
 
@@ -167,13 +167,12 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Email settings
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = str(os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend'))
+EMAIL_HOST = str(os.getenv('EMAIL_HOST', 'smtp.gmail.com'))
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = str(os.getenv('EMAIL_HOST_USER', ''))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD', ''))
 
 # List of fields for signup
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1', 'password2']

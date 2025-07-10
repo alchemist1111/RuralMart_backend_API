@@ -3,6 +3,13 @@ from django.contrib.auth import password_validation
 from allauth.account.models import EmailAddress
 from .models import CustomUser
 
+# User Serializer
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'first_name', 'last_name', 'email', 'phone_number', 'role', 'date_joined', 'last_login']
+        read_only_fields = ['id', 'date_joined', 'last_login']
+# Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     password_confirmation = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})

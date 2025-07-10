@@ -2,7 +2,7 @@ from rest_framework import status, request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, UserSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.tokens import default_token_generator
@@ -17,49 +17,57 @@ from rest_framework.permissions import IsAdminUser
 # Get the correct user model
 User = get_user_model()
 
-# Register View
 class RegisterView(APIView):
     """
     View to handle user registration.
     """
     permission_classes = [AllowAny]
+
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
+        
         if serializer.is_valid():
             # Save the user instance after validation
             user = serializer.save()
-            
-             # Generate token for email verification
-            token = default_token_generator.make_token(user)
-            
-            # URL-safe encode the user ID
-            uid = urlsafe_base64_encode(user.pk.encode())
-            
-             # Construct the verification URL
-            verification_url = f'http://127.0.0.1:8000/verify-email/{uid}/{token}'
-            
-             # Construct the email content
-            subject = "Email Verification"
-            message = f"Hello {user.first_name},\n\n" \
-                      f"Please click the link below to verify your email address:\n" \
-                      f"{verification_url}\n\n" \
-                      f"If you did not create an account, please ignore this email."
-            
-            # Send email
-            send_mail(
-                subject,
-                message,
-                'ruralmartmarketplace@gmail.com',
-                [user.email],
-                fail_silently=False,
-            )          
-            
-            # Return a response with a success message
-            message = (
-                "User registered successfully. Please check your email to verify your account."
-            )
-            return Response({"message": message}, status=status.HTTP_201_CREATED)
+
+            try:
+                # Generate token for email verification
+                token = default_token_generator.make_token(user)
+
+                # URL-safe encode the user ID
+                uid = urlsafe_base64_encode(str(user.pk).encode())
+
+                # Construct the verification URL
+                verification_url = f'http://127.0.0.1:8000/verify-email/{uid}/{token}'
+
+                # Construct the email content
+                subject = "Email Verification"
+                message = f"Hello {user.first_name},\n\n" \
+                          f"Please click the link below to verify your email address:\n" \
+                          f"{verification_url}\n\n" \
+                          f"If you did not create an account, please ignore this email."
+
+                # Send email
+                send_mail(
+                    subject,
+                    message,
+                    'ruralmartmarketplace@gmail.com',
+                    [user.email],
+                    fail_silently=False,
+                )
+
+                # Return a response with a success message
+                message = "User registered successfully. Please check your email to verify your account."
+                return Response({"message": message}, status=status.HTTP_201_CREATED)
+
+            except Exception as e:
+                # Handle error (logging, returning a failure response, etc.)
+                return Response({"error": f"An error occurred while sending the verification email: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        # If the serializer is invalid, return the validation errors
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# 
 
 # Login View
 class LoginView(APIView):
@@ -98,6 +106,15 @@ class LoginView(APIView):
                 "role": user.role,
             }
         }, status=status.HTTP_200_OK)
+# User List View
+class UserListView(APIView):
+    # permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+     
         
 # Delete User by ID View
 class DeleteUserByIdView(APIView):
