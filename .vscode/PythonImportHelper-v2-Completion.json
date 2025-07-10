@@ -98,7 +98,7 @@
         "documentation": {}
     },
     {
-        "label": "User",
+        "label": "BaseUserManager",
         "importPath": "django.contrib.auth.models",
         "description": "django.contrib.auth.models",
         "isExtraImport": true,
@@ -312,6 +312,14 @@
         "description": "django.core.mail",
         "isExtraImport": true,
         "detail": "django.core.mail",
+        "documentation": {}
+    },
+    {
+        "label": "AllowAny",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
         "documentation": {}
     },
     {
@@ -657,11 +665,20 @@
         "documentation": {}
     },
     {
+        "label": "CustomUserManager",
+        "kind": 6,
+        "importPath": "users.models",
+        "description": "users.models",
+        "peekOfCode": "class CustomUserManager(BaseUserManager):\n    def create_user(self, email, password=None, **extra_fields):\n        \"\"\"\n        Create and return a user with an email and password.\n        \"\"\"\n        if not email:\n            raise ValueError('The Email field must be set')\n        email = self.normalize_email(email)\n        user = self.model(email=email, **extra_fields)\n        user.set_password(password)",
+        "detail": "users.models",
+        "documentation": {}
+    },
+    {
         "label": "CustomUser",
         "kind": 6,
         "importPath": "users.models",
         "description": "users.models",
-        "peekOfCode": "class CustomUser(AbstractUser):\n    username = None  # Disable username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)\n    last_name = models.CharField(max_length=255, blank=True, null=True)\n    email = models.EmailField(unique=True, blank=False, null=False)\n    phone_number = models.CharField(max_length=15, blank=True, null=True)\n    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='customer')\n    date_joined = models.DateTimeField(auto_now_add=True)\n    last_login = models.DateTimeField(auto_now=True)\n    # The required field is email",
+        "peekOfCode": "class CustomUser(AbstractUser):\n    username = None  # Remove the username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)\n    last_name = models.CharField(max_length=255, blank=True, null=True)\n    email = models.EmailField(unique=True, blank=False, null=False)\n    phone_number = models.CharField(max_length=15, blank=True, null=True)\n    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='customer')\n    date_joined = models.DateTimeField(auto_now_add=True)\n    last_login = models.DateTimeField(auto_now=True)\n    USERNAME_FIELD = 'email'  # Set email as the unique identifier",
         "detail": "users.models",
         "documentation": {}
     },
@@ -679,7 +696,7 @@
         "kind": 5,
         "importPath": "users.models",
         "description": "users.models",
-        "peekOfCode": "ROLE_CHOICES = [\n        ('customer', 'Customer'),\n        ('farmer', 'Farmer'),\n        ('artisan', 'Artisan'),\n        ('admin', 'Admin'),\n    ]\n# Create your models here.\nclass CustomUser(AbstractUser):\n    username = None  # Disable username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)",
+        "peekOfCode": "ROLE_CHOICES = [\n    ('customer', 'Customer'),\n    ('farmer', 'Farmer'),\n    ('artisan', 'Artisan'),\n    ('admin', 'Admin'),\n]\nclass CustomUser(AbstractUser):\n    username = None  # Remove the username field\n    first_name = models.CharField(max_length=255, blank=True, null=True)\n    last_name = models.CharField(max_length=255, blank=True, null=True)",
         "detail": "users.models",
         "documentation": {}
     },
@@ -688,7 +705,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class RegisterSerializer(serializers.ModelSerializer):\n    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})\n    password_confirmation = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})\n    class Meta:\n        model = User\n        fields = ['first_name', 'last_name', 'email', 'password', 'password_confirmation', 'phone_number']\n    def validate(self, attrs):\n        # Validate that passwords match\n        if attrs['password'] != attrs['password_confirmation']:\n            raise serializers.ValidationError(\"Passwords do not match.\") ",
+        "peekOfCode": "class RegisterSerializer(serializers.ModelSerializer):\n    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})\n    password_confirmation = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})\n    class Meta:\n        model = CustomUser\n        fields = ['first_name', 'last_name', 'email', 'phone_number', 'password', 'password_confirmation']\n    def validate(self, attrs):\n        # Validate that passwords match\n        if attrs['password'] != attrs['password_confirmation']:\n            raise serializers.ValidationError(\"Passwords do not match.\") ",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -724,7 +741,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class RegisterView(APIView):\n    \"\"\"\n    View to handle user registration.\n    \"\"\"\n    def post(self, request):\n        serializer = RegisterSerializer(data=request.data)\n        if serializer.is_valid():\n            # Save the user instance after validation\n            serializer.save()\n            # Return a response with a success message",
+        "peekOfCode": "class RegisterView(APIView):\n    \"\"\"\n    View to handle user registration.\n    \"\"\"\n    permission_classes = [AllowAny]\n    def post(self, request):\n        serializer = RegisterSerializer(data=request.data)\n        if serializer.is_valid():\n            # Save the user instance after validation\n            serializer.save()",
         "detail": "users.views",
         "documentation": {}
     },
@@ -760,7 +777,7 @@
         "kind": 5,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "User = get_user_model()\n# Register View\nclass RegisterView(APIView):\n    \"\"\"\n    View to handle user registration.\n    \"\"\"\n    def post(self, request):\n        serializer = RegisterSerializer(data=request.data)\n        if serializer.is_valid():\n            # Save the user instance after validation",
+        "peekOfCode": "User = get_user_model()\n# Register View\nclass RegisterView(APIView):\n    \"\"\"\n    View to handle user registration.\n    \"\"\"\n    permission_classes = [AllowAny]\n    def post(self, request):\n        serializer = RegisterSerializer(data=request.data)\n        if serializer.is_valid():",
         "detail": "users.views",
         "documentation": {}
     },

@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.exceptions import ValidationError
 from django.contrib.auth import password_validation
 from django.core.mail import send_mail
+from rest_framework.permissions import AllowAny
 
 # Get the correct user model
 User = get_user_model()
@@ -19,6 +20,7 @@ class RegisterView(APIView):
     """
     View to handle user registration.
     """
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
