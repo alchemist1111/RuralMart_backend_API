@@ -33,6 +33,9 @@ DEBUG = os.getenv("DEBUG", default="False") == "True"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", default="").split(",")
 
+# Custom user model
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 # Application definition
 
