@@ -70,6 +70,7 @@ cover/
 
 # Database
 db.sql
+ruralmart_db
 
 # Ideation text
 ideation.txt
